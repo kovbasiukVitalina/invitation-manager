@@ -71,22 +71,7 @@ export const BackgroundGradientAnimation = ({
     }
 
     move();
-  }, [
-    tgX,
-    tgY,
-    "blendingValue",
-    "fifthColor",
-    "firstColor",
-    "fourthColor",
-    "gradientBackgroundEnd",
-    "gradientBackgroundStart",
-    "pointerColor",
-    "secondColor",
-    "size",
-    "thirdColor",
-    curX,
-    curY,
-  ]);
+  }, [tgX, tgY]);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (interactiveRef.current) {
