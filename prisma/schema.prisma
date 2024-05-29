@@ -1,0 +1,29 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("dataBaseUrl")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Invite {
+    id          String      @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    description String
+    eventDate   DateTime
+    location    String
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    recipients  Recipient[]
+}
+
+model Recipient {
+    id                  String  @id @default(auto()) @map("_id") @db.ObjectId
+    inviteId            String  @db.ObjectId
+    name                String
+    email               String?
+    mobile              String?
+    personalizedMessage String
+    invite              Invite  @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+}
