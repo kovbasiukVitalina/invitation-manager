@@ -51,7 +51,7 @@ const HeaderComponent = () => {
         isScrolling
           ? "py-2 w-[calc(100%-2rem)] top-0 left-1/2 -translate-x-1/2 mt-2 rounded-3xl shadow-primary/20 shadow-xl"
           : " w-full py-6",
-        "fixed z-30 top-0 left-1/2 -translate-x-1/2 px-6 flex justify-between items-center gap-4 bg-secondary/60 text-primary transition-all duration-300 backdrop-blur-md"
+        "fixed z-10 top-0 left-1/2 -translate-x-1/2 px-6 flex justify-between items-center gap-4 bg-secondary/60 text-primary transition-all duration-300 backdrop-blur-md"
       )}
     >
       <TooltipProvider>

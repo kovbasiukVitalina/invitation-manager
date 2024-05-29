@@ -80,6 +80,8 @@ const FormComponent = () => {
         },
         body: JSON.stringify(requestData),
       });
+
+      form.reset();
     } catch (error) {
       console.error("Error:", error);
     }

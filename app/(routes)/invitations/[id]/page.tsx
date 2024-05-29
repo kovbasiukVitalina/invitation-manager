@@ -4,7 +4,7 @@ import LoadingComponent from "@/app/loading";
 import Icon from "@/components/icon-component";
 import { InviteProps } from "@/type";
 import { BadgeMinus, Delete, Mail, Settings } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import {
   Dialog,
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast, useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 
 const InvitationPage = () => {
   const { id } = useParams();
@@ -27,6 +27,9 @@ const InvitationPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [currentKey, setCurrentKey] = useState<string>("");
   const [currentValue, setCurrentValue] = useState<string>("");
+  const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const getInvite = async () => {
@@ -61,6 +64,7 @@ const InvitationPage = () => {
       if (response.ok) {
         const data = await response.json();
         setInvite(data);
+        setOpen(false);
         toast({
           title: "Success",
           description: "Invite updated successfully",
@@ -95,6 +99,8 @@ const InvitationPage = () => {
           description: "Invite deleted successfully",
           variant: "destructive",
         });
+
+        router.push("/invitations");
       } else {
         console.error("Failed to delete invite");
       }
@@ -111,8 +117,8 @@ const InvitationPage = () => {
         <div className="container py-[100px]">
           <div>
             <Icon name={Mail} className="text-primary" size="300" />
-            <Button onClick={handleDelete}>
-              <Icon name={BadgeMinus} className="text-foreground" size="40" />
+            <Button onClick={handleDelete} variant="destructive">
+              <Icon name={BadgeMinus} size="30" />
             </Button>
           </div>
           <Suspense fallback={<LoadingComponent />}>
@@ -129,7 +135,7 @@ const InvitationPage = () => {
                       <p className="text-start">{value}</p>
                     </div>
                   ) : (
-                    <Dialog>
+                    <Dialog  open={open} onOpenChange={setOpen}>
                       <DialogTrigger
                         className="cursor-pointer w-full grid-1 md:grid grid-cols-2 p-3 border border-primary mb-4 rounded-3xl"
                         onClick={() => handleDialogOpen(key, value as string)}
