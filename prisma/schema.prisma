@@ -15,7 +15,9 @@ model Invite {
     location    String
     createdAt   DateTime    @default(now())
     updatedAt   DateTime    @updatedAt
-    recipients  Recipient[]
+    Recipients  Recipient[]
+    Auto        Auto?       @relation(fields: [autoId], references: [id])
+    autoId      String?     @db.ObjectId
 }
 
 model Recipient {
@@ -25,5 +27,28 @@ model Recipient {
     email               String?
     mobile              String?
     personalizedMessage String
-    invite              Invite  @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+    Invite              Invite  @relation(fields: [inviteId], references: [id])
+    Auto                Auto?   @relation(fields: [autoId], references: [id])
+    autoId              String? @db.ObjectId
+}
+
+model Auto {
+    id        String      @id @default(auto()) @map("_id") @db.ObjectId
+    model     String
+    brend     String
+    seats     Int
+    class     Class
+    price     Float
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+    inviteId  String      @unique @db.ObjectId
+    Invite    Invite[]
+    Recipient Recipient[]
+}
+
+enum Class {
+    ECONOMY
+    STANDARD
+    BUSINESS
+    PREMIUM
 }
