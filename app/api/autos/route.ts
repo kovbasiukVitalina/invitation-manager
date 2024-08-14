@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const invites = await prisma.auto.findMany({
+  const auto = await prisma.auto.findMany({
     include: {
       Recipient: true,
       Invite: true,
@@ -12,7 +12,7 @@ export async function GET() {
     },
   });
 
-  return NextResponse.json(invites, { status: 200 });
+  return NextResponse.json(auto, { status: 200 });
 }
 
 export async function POST(req: NextRequest) {
